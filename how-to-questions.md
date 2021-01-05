@@ -2,8 +2,8 @@
 <details><summary>Ans.</summary>
 <p>
   <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/docker-basics.html">AWS Doc</a>
+
 ```
-  
 # AWS EC2
 # Uninstall any older version of dockers:
 
