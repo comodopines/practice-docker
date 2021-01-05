@@ -202,31 +202,20 @@ $ docker exec -it <startedContainerName> ash
 </details>
 --------
 
-> Q. How to copy a file from container to local?
+> Q. How to copy a file from container to local and vice versa?
 <details><summary>Ans.</summary>
 <p>  
   
 ```
-#Ubuntu
+#Docker Container To Local
 $ docker cp <startedContainerName>:<filePathOnContaner> <localPathOnSystem>
-
-#Alpine
+#
 $ docker cp myContainer:/etc/nginx/conf.d/default.conf /tmp/
-```
 
-</p>
-</details>
---------
 
-> Q. How to copy a file from local to container?
-<details><summary>Ans.</summary>
-<p>  
-  
-```
-#Ubuntu
+#Local to Docker Container
 $ docker cp <localPathOnSystem> <startedContainerName>:<filePathOnContaner>
-
-#Alpine
+#
 $ docker cp /tmp/default.conf myContainer:/etc/nginx/conf.d/default.conf 
 ```
 
