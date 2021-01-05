@@ -283,3 +283,16 @@ $ docker stats containerName
 </p>
 </details>
 --------
+
+> Q. How to find the IP address of a docker container?
+<details><summary>Ans.</summary>
+<p>  
+  
+```
+#using docker inspect
+$ docker inspect <containerName> | grep IP
+```
+
+</p>
+</details>
+--------
