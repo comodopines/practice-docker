@@ -217,3 +217,19 @@ $ docker cp myContainer:/etc/nginx/conf.d/default.conf /tmp/
 </p>
 </details>
 --------
+
+> Q. How to copy a file from local to container?
+<details><summary>Ans.</summary>
+<p>  
+  
+```
+#Ubuntu
+$ docker cp <localPathOnSystem> <startedContainerName>:<filePathOnContaner>
+
+#Alpine
+$ docker cp /tmp/default.conf myContainer:/etc/nginx/conf.d/default.conf 
+```
+
+</p>
+</details>
+--------
