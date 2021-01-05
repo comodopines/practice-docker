@@ -112,7 +112,7 @@ $ docker run -it alpine
 --------
 
 > Q. How to run a persistent docker container
-and doesnt exit immediately after "docker run" command completes?
+that doesnt exit immediately after "docker run" command completes?
 <details><summary>Ans.</summary>
 <p>  
   
@@ -121,6 +121,8 @@ and doesnt exit immediately after "docker run" command completes?
 $ docker run -dt alpine
 
 #This will generate a hash which can be used to track the cotainer
+#CONTAINER ID   IMAGE         COMMAND     CREATED          STATUS                      PORTS     NAMES
+#ac932f7e2efb   alpine        "/bin/sh"   6 minutes ago    Up 6 minutes                          lucid_greider
 ```
 </p>
 </details>
@@ -136,24 +138,25 @@ $ docker run -dt --name myContainer alpine
 
 #This will generate a hash which can be used to track the cotainer
 #CONTAINER ID   IMAGE         COMMAND     CREATED          STATUS                      PORTS     NAMES
-#ac932f7e2efb   alpine        "/bin/sh"   6 minutes ago    Up 6 minutes                          lucid_greider
+#83c822b310b2   alpine        "/bin/sh"   3 seconds ago    Up 3 seconds                          myContainer
 ```
 </p>
 </details>
 --------
 
-> Q. How to provide user specific name to a docker container?
+> Q. How to ensure docker container restarts in case
+host reboots?
 <details><summary>Ans.</summary>
 <p>  
   
 ```
-#By using a --name flag
-$ docker run -dt --name myContainer alpine
+#By using a --restart flag
+$ docker run -dt --name myContainer alpine --restart always
+$ docker run -dt --name myContainer alpine --restart unless-stopped
+$ docker run -dt --name myContainer alpine --restart on-failure
 
-#This will generate a hash which can be used to track the cotainer
-#CONTAINER ID   IMAGE         COMMAND     CREATED          STATUS                      PORTS     NAMES
-#83c822b310b2   alpine        "/bin/sh"   3 seconds ago    Up 3 seconds                          myContainer
-
+#default value is no
+$ docker run -dt --name myContainer alpine --restart no
 ```
 </p>
 </details>
