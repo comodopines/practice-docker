@@ -175,12 +175,13 @@ $ docker run -it --name myContainer --rm alpine
 </details>
 --------
 
-> Q. How to start a stopped container?
+> Q. How to start a stopped container? How to restart a container?
 <details><summary>Ans.</summary>
 <p>  
   
 ```
 $ docker start <stoppedContainerName>
+$ docker restart <stoppedContainerName>
 ```
 </p>
 </details>
@@ -198,6 +199,18 @@ $ docker exec -it <startedContainerName> bash
 $ docker exec -it <startedContainerName> ash
 ```
 
+</p>
+</details>
+--------
+
+> Q. How to execute a command on an already running container?
+<details><summary>Ans.</summary>
+<p>  
+  
+```
+$ docker exec <runningContainerName> <command>
+$ docker exec myContainer ls -larth
+```
 </p>
 </details>
 --------
