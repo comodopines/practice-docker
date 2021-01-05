@@ -96,7 +96,6 @@ $ docker ps -a
 </details>
 --------
 
-
 > Q. How to run a docker container with interactive shell?
 <details><summary>Ans.</summary>
 <p>  
@@ -107,6 +106,54 @@ $ docker run -i alpine
 
 #with a terminal or tty
 $ docker run -it alpine
+```
+</p>
+</details>
+--------
+
+> Q. How to run a persistent docker container
+and doesnt exit immediately after "docker run" command completes?
+<details><summary>Ans.</summary>
+<p>  
+  
+```
+#By using a daemon/detached flag
+$ docker run -dt alpine
+
+#This will generate a hash which can be used to track the cotainer
+```
+</p>
+</details>
+--------
+
+> Q. How to provide user specific name to a  docker container?
+<details><summary>Ans.</summary>
+<p>  
+  
+```
+#By using --name flag
+$ docker run -dt --name myContainer alpine
+
+#This will generate a hash which can be used to track the cotainer
+#CONTAINER ID   IMAGE         COMMAND     CREATED          STATUS                      PORTS     NAMES
+#ac932f7e2efb   alpine        "/bin/sh"   6 minutes ago    Up 6 minutes                          lucid_greider
+```
+</p>
+</details>
+--------
+
+> Q. How to provide user specific name to a docker container?
+<details><summary>Ans.</summary>
+<p>  
+  
+```
+#By using a --name flag
+$ docker run -dt --name myContainer alpine
+
+#This will generate a hash which can be used to track the cotainer
+#CONTAINER ID   IMAGE         COMMAND     CREATED          STATUS                      PORTS     NAMES
+#83c822b310b2   alpine        "/bin/sh"   3 seconds ago    Up 3 seconds                          myContainer
+
 ```
 </p>
 </details>
