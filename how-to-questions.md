@@ -296,3 +296,32 @@ $ docker inspect <containerName> | grep IP
 </p>
 </details>
 --------
+
+> Q. How to run a docker container on port 5555 on host mapped to 55 on container?
+<details><summary>Ans.</summary>
+<p>  
+  
+```
+#using -p flag
+$ docker run -p 5555:55 --name <containerName> -dt <imageName>
+
+#If the container is already running then the image needs to be copied first and then relaunched
+# Lets say nginx was already running on one container myContainer
+#you can launch myContainer02 with above config
+
+$ docker commit myContainer baseNginxImage
+$ docker run -p 5555:55 --name myContainer02 -dt baseNginxImage
+
+#Additionally run the actual nginx process as a foreground process
+$ docker exec -dt myContainer02 nginx -g 'pid /tmp/nginx.pid; daemon off;'
+#Additionally copy a sample file to run from nginx
+$ docker cp <localIndex.html> <container>:<pathToNginxIndex.html>
+
+#Curl at this point on local host or docker container should return same response
+curl localhost:5555
+curl $(docker inspect <containerName> | grep  \"IPAddress\"| head -1| awk -F":" '{print $2}'| sed "s/[\",]//g"):55
+```
+
+</p>
+</details>
+--------
