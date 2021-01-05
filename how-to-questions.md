@@ -162,7 +162,8 @@ $ docker run -dt --name myContainer alpine --restart no
 </details>
 --------
 
-> Q. How to ensure docker container is removed from list of containers once it stops?
+> Q. How to ensure docker container is automatically removed
+from list of containers once it stops?
 <details><summary>Ans.</summary>
 <p>  
   
