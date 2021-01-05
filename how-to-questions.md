@@ -95,3 +95,19 @@ $ docker ps -a
 </p>
 </details>
 --------
+
+
+> Q. How to run a docker container with interactive shell?
+<details><summary>Ans.</summary>
+<p>  
+  
+```
+#without a terminal or tty
+$ docker run -i alpine
+
+#with a terminal or tty
+$ docker run -it alpine
+```
+</p>
+</details>
+--------
