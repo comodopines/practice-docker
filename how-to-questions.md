@@ -185,3 +185,35 @@ $ docker start <stoppedContainerName>
 </p>
 </details>
 --------
+
+> Q. How to get an interactive tty shell if a container is already started?
+<details><summary>Ans.</summary>
+<p>  
+  
+```
+#Ubuntu
+$ docker exec -it <startedContainerName> bash
+
+#Alpine
+$ docker exec -it <startedContainerName> ash
+```
+
+</p>
+</details>
+--------
+
+> Q. How to copy a file from container to local?
+<details><summary>Ans.</summary>
+<p>  
+  
+```
+#Ubuntu
+$ docker cp <startedContainerName>:<filePathOnContaner> <localPathOnSystem>
+
+#Alpine
+$ docker cp myContainer:/etc/nginx/conf.d/default.conf /tmp/
+```
+
+</p>
+</details>
+--------
