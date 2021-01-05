@@ -56,14 +56,13 @@ $ sudo usermod ubuntu -aG docker
 ```
 $ docker run <image-name>
   
-#To generate this message, Docker took the following steps:
+#Steps involved to run a docker image:
  1. The Docker client contacted the Docker daemon.
- 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+ 2. The Docker daemon pulled the "image-name" image from the Docker Hub, if not present in local.
     (amd64)
  3. The Docker daemon created a new container from that image which runs the
-    executable that produces the output you are currently reading.
- 4. The Docker daemon streamed that output to the Docker client, which sent it
-    to your terminal.
+    executable.
+ 4. The Docker daemon streams any outputs to the Docker client, which can be seen on terminal.
 ```
 </p>
 </details>
@@ -76,6 +75,20 @@ $ docker run <image-name>
 ```
 #https://docs.docker.com/engine/reference/commandline/container_ls/
 $ docker container ls
+OR
+$ docker ps
+```
+</p>
+</details>
+--------
+
+> Q. How to see both running and stopped docker containers?
+<details><summary>Ans.</summary>
+<p>  
+  
+```
+#https://docs.docker.com/engine/reference/commandline/container_ls/
+$ docker container ls -a
 OR
 $ docker ps -a
 ```
