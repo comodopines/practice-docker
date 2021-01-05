@@ -174,3 +174,14 @@ $ docker run -it --name myContainer --rm alpine
 </p>
 </details>
 --------
+
+> Q. How to start a stopped container?
+<details><summary>Ans.</summary>
+<p>  
+  
+```
+$ docker start <stoppedContainerName>
+```
+</p>
+</details>
+--------
