@@ -222,3 +222,51 @@ $ docker cp /tmp/default.conf myContainer:/etc/nginx/conf.d/default.conf
 </p>
 </details>
 --------
+
+> Q. How to remove stopped container?
+<details><summary>Ans.</summary>
+<p>  
+  
+```
+#Remove a single stopped docker container
+$ docker rm <containerName>
+
+#Remove all stopped containers
+$ docker container prune 
+
+```
+
+</p>
+</details>
+--------
+
+> Q. How to rename a running container?
+<details><summary>Ans.</summary>
+<p>  
+  
+```
+$ docker rename <oldContainerName> <newContainerName>
+
+$ docker rename myContainer nginxContainer
+
+```
+
+</p>
+</details>
+--------
+
+> Q. How to check container performance like cpu, memory etc.?
+<details><summary>Ans.</summary>
+<p>  
+  
+```
+#To see stats of all containers
+$ docker stats
+
+$To see stats of a given container
+$ docker stats containerName
+```
+
+</p>
+</details>
+--------
