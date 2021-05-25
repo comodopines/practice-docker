@@ -44,6 +44,27 @@ $ sudo apt-get update
 $ sudo apt install docker-ce docker-ce-cli containerd.io
 # Add ubuntu user to docker group to be able to run docker
 $ sudo usermod ubuntu -aG docker
+  
+###########################################
+# Centos
+###########################################
+$ sudo yum update -y
+$ sudo yum install -y yum-utils \
+                      device-mapper-persistent-data \
+                      lvm2
+
+# Yum-utils add yum-config-manager which we will use to add repo and then install the docker
+$ sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce-repo 
+
+# Install docker
+$ sudo yum -y install docker-ce
+
+# Enable docker daemon using systemd
+$ sudo systemctl enable --now docker
+
+#Enabling nnaxvm user to docker group to be able to run dockers
+$ sudo usermod -aG docker nnaxvm 
+ 
 ```
 </p>
 </details>
