@@ -1,0 +1,90 @@
+1) Run a container of httpd
+2) Login to container and git clone a repository in it.
+     |---> Install git
+     |---> git clone a repo in /tmp/ dir
+     |---> Copy the contents to /usr/local/apache2/htdocs
+3) Commit the update container as a new image myhttpd/webimage:v1
+4) Run a new container with new image - not needed but can be tested 
+5) Login to the container and do the cleanup
+     |---> Remove the residual /tmp/ git pull dir
+     |---> Remove the git installed which is not needed now
+6) Commit the update container as a new image myhttpd/webimage:v2
+7) Remove v1 image
+
+# Steps of execution to get docker ready
+$ yum updae -y
+$ yum install yum-utils device-mapping-persistent-data lvm2
+$ yum-repo-manager --add-repo https://download.docker.com/linux/centos/docker-ce-repo
+$ systemctl enable --now docker
+$ usermod -aG docker_group current_user
+
+############################################
+# Steps of execution to run iamge Step 1
+############################################
+$ docker pull httpd:2.4
+$ docker run --name my_httpd_2.4 -d httpd:2.4
+
+#Note no external internal port mapping as we just need this for generating the template of container : missing -p 8080:80 
+
+############################################
+# Steps of execution for Step 2
+############################################
+# Check my_httpd_2.4 is running
+$ docker ps -a 
+
+$ docker exec -it my_httpd_2.4 bash
+
+# Now inside the contaier
+# Install git
+$> yum install git
+
+# Clone repo
+$> git clone https://github.com/owner/repo.git /tmp/web-content
+$> rm /usr/local/apache2/htdocs/*
+$> cp -r /tmp/web/* /usr/local/apache2/htdocs/
+$> Ctrl+D
+
+
+############################################
+# Steps of execution for Step 3 to create image myhttpd/webimage:v1
+############################################
+$ docker ps 
+$ docker commit <shaof running container> myhttpd/webimage:v1
+$ docker images
+# check the size of images
+# Optional Step 4 #########################
+$ docker run --name my_http_webimage_v1 -d myhttpd/webimage:v1
+
+############################################
+# Steps of execution for Step 5 to create image myhttpd/webimage:v2
+############################################
+$ docker ps 
+$ docker exec -it <name of container or sha> bash
+
+# Now inside the contaier
+# Remove the /tmp/ directory where cloning was done
+$> rm -rf /tmp/web
+
+# Remove git && its installed dependencies && apt clean to cached files
+$> apt remove git && apt autoremove -y && apt clean
+$> Ctrl+D
+
+############################################
+# Steps of execution for Step 6 and 7
+############################################
+# Back on docker machine
+$ docker commit <shaof running container> myhttpd/webimage:v2
+
+# Check all three images
+$ docker images
+
+# Remove the old image
+$ docker rmi myhttpd/webimage:v1
+
+
+############################################
+# Run the latest images
+############################################
+$ docker run -p 8081:80 --name my_httpd_1 -d myhttpd/webimage:v2
+$ docker run -p 8082:80 --name my_httpd_2 -d myhttpd/webimage:v2
+$ docker run -p 8083:80 --name my_httpd_3 -d myhttpd/webimage:v2
