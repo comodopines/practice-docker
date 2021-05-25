@@ -47,6 +47,7 @@ $ sudo usermod ubuntu -aG docker
 ```
 </p>
 </details>
+
 --------
 > Q. How to build a docker image myHeroes from a dockerfile kept at /path/to/a/Dockerfile?
 <details><summary>Ans.</summary>
