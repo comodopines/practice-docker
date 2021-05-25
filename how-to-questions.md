@@ -54,6 +54,7 @@ $ sudo usermod ubuntu -aG docker
 <p>  
 ```
 docker build -f /path/to/a/Dockerfile .
+  
 ```
 </p>
 </details>
