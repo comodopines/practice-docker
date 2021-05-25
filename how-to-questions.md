@@ -70,7 +70,8 @@ vi docker-ce.repo
   
 # Enable docker daemon using systemd
 $ sudo systemctl enable --now docker
-
+#this creates a sym link from /etc/systemd/system/multi-user.target.wants/docker.service to /usr/lib/systemd/system/docker.service
+  
 #Enabling nnaxvm user to docker group to be able to run dockers
 $ sudo usermod -aG docker nnaxvm 
  
