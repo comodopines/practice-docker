@@ -189,6 +189,7 @@ $ docker run -dt --name myContainer alpine --restart no
 </p>
 </details>
 --------
+
 > Q. How to start a stopped container? How to restart a container?
 <details><summary>Ans.</summary>
 <p>  
@@ -200,6 +201,7 @@ $ docker restart <stoppedContainerName>
 </p>
 </details>
 --------
+
 > Q. How to run a docker container on port 5555 on host mapped to 55 on container?
 <details><summary>Ans.</summary>
 <p>  
