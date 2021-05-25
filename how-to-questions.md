@@ -336,3 +336,33 @@ curl $(docker inspect <containerName> | grep  \"IPAddress\"| head -1| awk -F":" 
 </p>
 </details>
 --------
+
+> Q. What is a registry and repository?
+<details><summary>Ans.</summary>
+<p>  
+  
+```
+Registry is a service hosted by (Docker Hub / Quay / AWS Container Reg)
+  |------>Repository1 (Python repo https://hub.docker.com/_/python?tab=tags&page=1&ordering=last_updated)
+  |.       |------>Image1 (hash)
+  |.               |------>Tag1 (ubuntu:latest)
+  |.               |------>Tag2 (ubuntu:
+  |.         
+  |------>Repository2
+  |.       |------>Image1
+  |.               |------>Tag1
+  |.               |------>Tag2
+  |.
+  |------>Repositoryn
+  |.       |------>Image1
+  |.               |------>Tag1
+  |.               |------>Tag2
+  |.
+  
+NOTE: An image has a 12-hex-digit Image ID, but is also identified by: namespace/repo-name:tag
+The image full name can be optionally prefixed by the registry host name and port: myregistryhost:5000/namespace/repo-name:tag
+```
+
+</p>
+</details>
+--------
