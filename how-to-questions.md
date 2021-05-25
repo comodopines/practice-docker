@@ -90,7 +90,7 @@ docker build -f /path/to/a/Dockerfile .
 </details>
 --------
 
-> Q. How to run a docker image?
+> Q. How to run a docker image? How does docker work under the hood when you run a command for docker run?
 <details><summary>Ans.</summary>
 <p>  
 
