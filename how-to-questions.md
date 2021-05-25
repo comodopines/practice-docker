@@ -49,6 +49,8 @@ $ sudo usermod ubuntu -aG docker
 # Centos
 ###########################################
 $ sudo yum update -y
+
+# device-mapper-persistent-data provides framework to map device blocks to v-device-blocks for lvm and raids to work
 $ sudo yum install -y yum-utils \
                       device-mapper-persistent-data \
                       lvm2
@@ -59,6 +61,13 @@ $ sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/do
 # Install docker
 $ sudo yum -y install docker-ce
 
+#there will be an error at above step of repo issue, try this
+cd /etc/ym.repos.d
+vi docker-ce.repo
+#edit the docker CE stable url's baseurl to a hardocded number 7 in case of centos 7 rather than $realserver
+
+#run sudo yum intall -y docker-ce
+  
 # Enable docker daemon using systemd
 $ sudo systemctl enable --now docker
 
