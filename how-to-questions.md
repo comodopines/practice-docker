@@ -1,5 +1,5 @@
 > Q. How to install docker?
-<details><summary>Ans.</summary>
+<details><summary>Ans. AWS</summary>
 <p>
   <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/docker-basics.html">AWS Doc</a>
 
@@ -22,6 +22,13 @@ $ sudo amazon-linux-extras install docker
 $ sudo service docker start
 $ sudo usermod -a -G docker ec2-user
 $ docker info
+```
+</p>
+</details>
+<details><summary>Ans. Ubuntu</summary>
+<p>  
+
+ ```  
 
 ###########################################
 # Ubuntu 20.4
@@ -44,7 +51,14 @@ $ sudo apt-get update
 $ sudo apt install docker-ce docker-ce-cli containerd.io
 # Add ubuntu user to docker group to be able to run docker
 $ sudo usermod ubuntu -aG docker
-  
+
+```
+</p>
+</details>
+<details><summary>Ans. Centos</summary>
+<p>  
+
+ ```  
 ###########################################
 # Centos
 ###########################################
