@@ -1,0 +1,11 @@
+#
+$ docker pull nginx
+$ docker pull httpd:2.4
+
+$ git clone <git dir>
+
+# Apache
+$ docker run -p 8081:80 --name my_httpd_2.4 -v $(pwd)/web:/usr/local/apache2/htdocs:ro -d httpd:2.4
+
+#Nginx
+$ docker run -p 8082:80 --name my_nginx_latest -v $(pwd)/web:/usr/share/nginx/html:ro -d nginx
