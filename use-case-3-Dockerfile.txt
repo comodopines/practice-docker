@@ -1,0 +1,28 @@
+1) Create an Dockerfile using httpd:2.4 image
+2) add simple apt commands
+3) Add env varibales to inspect 
+
+export showLayer='{{ range .RootFS.Layers }}{{ println . }}{{end}}'
+export showSize='{{ .Size }}'
+
+#Dockerfile
+FROM httpd:2.4
+RUN apt update -y && apt upgrade -y && apt autoremove -y && apt clean && rm -rf /var/lib/apt/lists/*
+
+#Building using docker file in current dir with code
+
+$ cd /usr/cloud_user/widget-.../.  (this is where Dockerfile is)
+$ docker build -t mywidget:0.1 .
+
+#Building using docker file in /tmp/ dir with code in /apps/ dir
+
+$ cd /usr/cloud_user/  (this is where nothing is)
+$ docker build -t dfile_in_tmp/mywidget:0.1 -f /tmp/Dockerfile /usr/cloud_user/widget-.../ 
+# (usr/cloud_user/widget-.../. this is where code is)
+
+# set env vars
+$ export showLayer='{{ range .RootFS.Layers }}{{ println . }}{{end}}'
+$ export showSize='{{ .Size }}'
+
+$ docker inspect -f "$showSize"
+$ dokcer inspect -f "$showLayer"
