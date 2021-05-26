@@ -1,0 +1,44 @@
+# This use case is to show how to use the volumes which are mounted on docker machine and can be used to upload the files from local to container.
+# This ensures that data is not copied over as part of an image, infact kept locally on machine
+# this also provides an opportunity to host data on S3, mount locally on server and run images referring to mount points
+
+1) Create a volume on local machine
+2) Use this volume to upload data to container (rather than running git clone from within the container)
+3) Take backups of the volume using manually as well as via docker command
+
+
+###################################
+# Step 1 - Create a volume
+###################################
+$ docker volume ls
+$ docker volume create first_volume
+
+###################################
+# Step 2
+###################################
+# Since this volume will be within root privilige below copy commands might need to happen as root
+# This will print out the exact location of first_volume mount - /var/lib/docker/volumes/first_volume/_data
+
+$ docker volume inspect first_volume
+# docker inspect shahashofcontainer -f '{{ json .Mounts }}' | python -m json.tool
+
+$ sudo su
+$ git clone https://.....git /tmp/website/
+$ cp -r /tmp/website/web/* /var/lib/docker/volumes/first_volume/_data/
+
+#Use the data to upload to container
+$ docker -p 8081:80 --name my_http_1 -v first_volume:/usr/local/apache2/htdocs:ro -d httpd:2.4
+$ docker exec -it <shahash> bash
+
+###################################
+# Step 3
+###################################
+# First using the sudo way
+
+$ sudo su 
+$ tar czf /tmp/first_volume_$(date +%Y%m%d-%H%M).tgz -C /var/lib/docker/volumes/first_volume/_data .  
+
+# Using on the fly docker if you do not have the access to root
+$ docker run --rm -it -v first_volume:/first_volume -v /tmp:/backup bash tar czf /backup/website_$(date +%Y%m%d-%H%M).tgz -C /first_volume .
+
+# Both commands have same affect
