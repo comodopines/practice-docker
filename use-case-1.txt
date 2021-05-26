@@ -36,7 +36,8 @@ $ docker exec -it my_httpd_2.4 bash
 
 # Now inside the contaier
 # Install git
-$> yum install git
+$> yum install git. ----> this wont work as it might be a dedian based container
+$> apt install git
 
 # Clone repo
 $> git clone https://github.com/owner/repo.git /tmp/web-content
