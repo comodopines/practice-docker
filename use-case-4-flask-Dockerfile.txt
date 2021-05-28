@@ -1,0 +1,64 @@
+# Dockerize a flask app
+# Update with Gunicorn
+
+project_dir
+|------> config.py #DB_HOST='localhost' SQLALCHEMY (this requires migration)
+|------> .env
+|------> .gitignore
+|------> __init__.py
+|------> models.py
+|------> Pipfile
+|------> Pipfile.lock
+|------> static
+|.   |------>
+|------> templates
+|.   |------>
+
+####################################################################
+# .dockerignore
+####################################################################
+.dockerignore
+.gitignore
+Dockerfile
+Pipfile.lock
+migrations/
+
+####################################################################
+# Dockerfile
+####################################################################
+FROM python:3
+
+#Env variables for Pipenv to work, PYBASE is where Pipenv saves all dependencies
+ENV PYBASE /pybase
+ENV PYTHONUSERBASE $PYBASE
+ENV PATH $PYBASE/bin:$PATH
+
+#Insall pipenv which uses above
+RUN pip install pipenv
+
+#Copy Pipfile
+WORKDIR /tmp
+COPY Pipfile .
+RUN pipenv lock
+
+#PIPUSER=1 to install dependencies in user directories 
+# -d (development dependencies included)
+# --system to install to our user dir rather than virtual env
+# ignore pipfile, since we just generated pipfile so no need
+RUN PIP_USER=1 PIP_IGNORE_INSTALLED=1 pipenv install -d --system --ignore-pipfile
+
+# COPY data
+COPY . /app/notes
+WORKDIR /app/notes
+
+# Run on port 80
+EXPOSE 80
+
+#Start flask app
+CMD ["flask", "run", "--port=80", "--host=0.0.0.0"]
+
+
+
+
+
+####################################################################
