@@ -1,0 +1,67 @@
+# Multi stage build. Good for prep
+
+
+# Nifty trick to edit files on local from a container [like updating dependencies]
+
+$ docker run --rm -it -v /path/to/file/to/edit:/path/on/container notesapp:0.2 bash
+$> cd /path/on/container
+$> file should be present here to edit
+$> pipenv install gunicorn
+
+####################################################################
+# Since gunicorn is installed to refer the .env file we have to add these to __init__.py
+####################################################################
+from dotenv import load_dotenv, find_dotenv
+load_dotenv(find_dotenv())
+
+
+####################################################################
+# Dockerfile
+####################################################################
+#-----> FROM python:3
+FROM python:3 AS base
+#------>
+#Env variables for Pipenv to work, PYBASE is where Pipenv saves all dependencies
+ENV PYBASE /pybase
+ENV PYTHONUSERBASE $PYBASE
+ENV PATH $PYBASE/bin:$PATH
+
+#------>
+FROM base AS builder
+#------>
+#Insall pipenv which uses above
+RUN pip install pipenv
+
+#Copy Pipfile
+WORKDIR /tmp
+COPY Pipfile .
+RUN pipenv lock
+
+#PIPUSER=1 to install dependencies in user directories 
+# -d (development dependencies included)
+# --system to install to our user dir set above rather than virtual env (PYBASE)
+# ignore pipfile, since we just generated pipfile so no need
+# installs in the PYBASE folder
+
+RUN PIP_USER=1 PIP_IGNORE_INSTALLED=1 pipenv install -d --system --ignore-pipfile
+
+# COPY data
+#------>
+FROM base
+COPY --from=builder /pybase /pybase
+#------>
+COPY . /app/notes
+#WORKDIR /app/notes
+WORKDIR /app/
+
+# Run on port 80
+EXPOSE 80
+
+#Start flask app
+#CMD ["flask", "run", "--port=80", "--host=0.0.0.0"]
+CMD ["gunicorn", "-b 0.0.0.0:80", "notes:create_app()"]
+####################################################################
+
+$ docker build -t notesapp:0.3
+
+$ docker run --name my_app -p 80:80 --network notes -d notesapp:0.3
