@@ -1,0 +1,41 @@
+1) make container user syslog
+2) make container use json file log driver
+
+
+####################
+# 1
+####################
+# Edit syslog config
+$ vi /etc/rsyslog.conf
+###### Uncomment UDP syslog reception section from the conf file on container host
+$ModLoad imudp
+$UDPServerRun 514
+
+$ systemctl start rsyslog
+
+#Ensure docker uses syslog
+vi /etc/docker/daemon.json
+{
+  "log-driver" : "syslog",
+  "log-opts" : {
+            "syslog-address" : "udp://<private ip add>:514"
+            }
+}           
+
+$ systemctl start docker
+$ tail -f /var/log/messages
+
+
+#Create new container
+$ docker run --name syslog-logging-container -d httpd
+
+#Check if something comes back from container, which wont as logs are going to syslog
+$ docker logs syslog-logging-container
+Error response from daemon: configured logging driver does not support reading
+
+
+# Create a new container to use the json confiugration
+$ docker run --name json------logging-container --log-driver json-file -d httpd
+
+#Check if something comes back from container, which it should as we ran with json-file
+$ docker logs json------logging-container
