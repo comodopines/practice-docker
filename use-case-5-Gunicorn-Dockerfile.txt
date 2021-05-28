@@ -1,1 +1,8 @@
+# Nifty trick to edit files on local from a container [like updating dependencies]
+
+$ docker run --rm -it -v /path/to/file/to/edit:/path/on/container notesapp:0.2 bash
+$> cd /path/on/container
+$> file should be present here to edit
+$> pipenv install gunicorn
+
 
