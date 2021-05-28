@@ -51,4 +51,5 @@ CMD ["gunicorn", "-b 0.0.0.0:80", "notes:create_app()"]
 
 $ docker build -t notesapp:0.3
 
+$ docker run --name my_app -p 80:80 --network notes -d notesapp:0.3
 
