@@ -1,0 +1,113 @@
+lb-challenge
+|.     |-------> load-balancer
+|.     |.     |-------> Dockerfile
+|.     |.     |-------> nginx.conf
+|.     |
+|.     |-------> weather-app
+|.     |.     |-------> Dockerfile
+|.     |.     |------->
+|.     |
+|.     |-------> docker-compose
+|.     |
+
+
+#####################################
+# lb-challenge/docker-compose
+#####################################
+version: '3.2'
+services:
+  weather-app1: 
+    build: ./weather-app
+    tty: true
+    networks:
+     - frontend
+  weather-app2: 
+    build: ./weather-app
+    tty: true
+    networks:
+     - frontend
+  weather-app3: 
+    build: ./weather-app
+    tty: true
+    networks:
+     - frontend
+  load-balancer:
+    build: ./load-balancer
+    tty: true
+    ports:
+     - 80:80
+    networks:
+     - frontend
+networks:
+  frontend:
+     
+     
+
+#####################################
+# lb-challenge/docker-compose/nginx.conf
+#####################################
+
+events { worker_connections 1024; }
+
+http 
+{
+  upstream localhost 
+  {
+      # Weather app config goes here.
+      server weather-app1:3000;
+      server weather-app2:3000;
+      server weather-app3:3000;
+      
+  }
+  server
+  {
+      # Server config goes here
+      listen 80;
+      server_name localhost;
+      
+      location / 
+      {
+          proxy_pass http://localhost;
+          proxy_set_header Host $host;
+      }
+  }
+} 
+
+
+#########################################
+# lb-challenge/load-balancer/Dockerfile #
+#########################################
+FROM nginx
+
+COPY nginx.conf /etc/nginx.conf
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon-off;"]
+
+
+
+#########################################
+# lb-challenge/weather-app/Dockerfile #
+#########################################
+FROM node
+
+LABEL maintainer="abc"
+
+RUN mkdir -p /var/node
+ADD src/ /var/node
+WORKDIR /var/node
+
+RUN npm install
+EXPOSE 3000
+CMD ./bin/www
+
+
+
+#####################################
+# Build using docker-compose
+#####################################
+\---> lb-challenge
+             \--->  docker-compose up --build -d 
+             
+             
